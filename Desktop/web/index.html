@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101416">
+  <title>سهل ريموت · Sahl Remote</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <a class="brand" href="/" aria-label="سهل ريموت، الرئيسية">
+        <span class="brand-icon" aria-hidden="true"><span></span></span>
+        <span class="brand-copy"><strong>سهل <span>ريموت</span></strong><small>SAHL REMOTE</small></span>
+      </a>
+      <div class="header-note"><span class="signal-icon" aria-hidden="true">⌁</span><span>جهازك، في متناولك</span></div>
+      <span class="network-badge"><span class="status-dot"></span>شبكة محلية</span>
+    </header>
+
+    <main>
+      <section class="intro" id="intro">
+        <div class="eyebrow"><span class="small-line"></span>مساحة عملك، من أي شاشة</div>
+        <h1>شاشتك الكبيرة.<br><span>بين إيديك.</span></h1>
+        <p>شوف جهاز ويندوز وتحكّم فيه من الموبايل أو من جهاز تاني، على نفس شبكة الواي فاي.</p>
+        <div class="feature-row" aria-label="المزايا"><span><i>✓</i> اتصال مباشر</span><span><i>✓</i> بموافقة جهازك</span><span><i>✓</i> من المتصفح</span></div>
+      </section>
+
+      <section class="connect-card" id="connect-card" aria-labelledby="connect-heading">
+        <div class="card-heading"><span class="step-tag">01 / CONNECT</span><span class="tiny-monitor" aria-hidden="true">▣</span></div>
+        <h2 id="connect-heading">وصّل بجهازك</h2>
+        <p class="card-description">افتح سهل ريموت على الكمبيوتر واكتب رمز الاتصال الظاهر عندك.</p>
+        <form id="pair-form" novalidate>
+          <label for="pair-code">رمز الاتصال <span>8 أرقام</span></label>
+          <input id="pair-code" name="code" type="text" inputmode="numeric" pattern="[0-9]{8}" minlength="8" maxlength="12" autocomplete="off" spellcheck="false" placeholder="0000 0000" aria-describedby="code-hint" required>
+          <label class="device-label" for="device-name">اسم جهازك <span>يظهر للكمبيوتر</span></label>
+          <input id="device-name" name="device" type="text" maxlength="48" autocomplete="off" placeholder="مثلًا: موبايل أحمد">
+          <button class="button button-primary connect-button" id="connect-button" type="submit"><span>اتصال بالكمبيوتر</span><span aria-hidden="true">←</span></button>
+          <p id="code-hint" class="form-hint">الكمبيوتر لازم يوافق على طلبك قبل عرض الشاشة.</p>
+        </form>
+        <div class="connection-message" id="connection-message" role="status" aria-live="polite" hidden></div>
+        <button type="button" class="button button-secondary cancel-connect" id="cancel-connect" hidden>إلغاء الطلب</button>
+        <div class="card-footer"><span class="lock-icon" aria-hidden="true">◇</span>رمز مؤقت · مفيش حساب أو تسجيل</div>
+      </section>
+
+      <section class="session" id="session" aria-label="جلسة التحكم عن بعد" hidden>
+        <div class="session-header">
+          <div class="session-host"><span class="live-indicator"></span><div><h2 id="host-name">الكمبيوتر</h2><p id="session-description">عرض الشاشة متصل</p></div></div>
+          <div class="session-actions"><span class="frame-stat" id="frame-stat" dir="ltr">— fps</span><button class="button button-secondary" id="fullscreen-button" type="button" title="ملء الشاشة">⛶ <span>ملء الشاشة</span></button><button class="button button-danger" id="disconnect-button" type="button">إنهاء</button></div>
+        </div>
+        <div class="viewer-layout" id="viewer-layout">
+          <div class="screen-panel">
+            <div class="screen-viewport" id="screen-viewport" tabindex="0" role="application" aria-label="شاشة الكمبيوتر. فعّل التحكم لاستخدام الماوس ولوحة المفاتيح.">
+              <canvas id="screen" width="1280" height="720" aria-label="البث المباشر لشاشة الكمبيوتر"></canvas>
+              <div class="frame-placeholder" id="frame-placeholder"><span class="screen-loader"></span><strong>بنجهّز الشاشة…</strong><span>أول صورة هتظهر هنا</span></div>
+              <div class="view-only-label" id="view-only-label"><span></span>عرض فقط — فعّل التحكم من الشريط</div>
+            </div>
+            <div class="screen-bottom"><span><span class="status-dot"></span><span id="stream-status">في انتظار الصورة</span></span><span id="screen-size" dir="ltr">— × —</span></div>
+          </div>
+          <aside class="control-panel" aria-label="أدوات التحكم">
+            <div class="control-heading"><span class="step-tag">02 / CONTROL</span><h3>إنت المتحكّم</h3><p>فعّل التحكم لما تكون جاهز.</p></div>
+            <button class="control-switch" id="control-toggle" type="button" aria-pressed="false"><span><strong id="control-title">التحكم مقفول</strong><small id="control-subtitle">تقدر تشوف الشاشة فقط</small></span><span class="switch-track" aria-hidden="true"><span></span></span></button>
+            <fieldset id="input-controls" disabled>
+              <legend class="sr-only">الماوس والكيبورد</legend>
+              <div class="control-group"><div class="group-label">الماوس</div><div class="mouse-buttons"><button type="button" class="tool-button" id="left-click">كليك شمال</button><button type="button" class="tool-button" id="right-click">كليك يمين</button></div><button type="button" class="tool-button drag-button" id="drag-toggle" aria-pressed="false"><span aria-hidden="true">↔</span><span>سحب باللمس</span><span class="mini-state" id="drag-state">مقفول</span></button><div class="scroll-buttons"><button type="button" class="tool-button" id="scroll-up" aria-label="تمرير لأعلى">↑ <span>تمرير لفوق</span></button><button type="button" class="tool-button" id="scroll-down" aria-label="تمرير لأسفل">↓ <span>تمرير لتحت</span></button></div></div>
+              <div class="control-group"><div class="group-label">الكيبورد</div><div class="modifier-buttons"><button type="button" class="key-button" id="ctrl-toggle" aria-pressed="false" dir="ltr">Ctrl</button><button type="button" class="key-button" id="alt-toggle" aria-pressed="false" dir="ltr">Alt</button><button type="button" class="key-button" id="shift-toggle" aria-pressed="false" dir="ltr">Shift</button></div><div class="special-keys"><button type="button" class="key-button" data-key="Escape" dir="ltr">Esc</button><button type="button" class="key-button" data-key="Tab" dir="ltr">Tab ⇥</button><button type="button" class="key-button" data-key="Backspace" dir="ltr">⌫</button><button type="button" class="key-button" data-key="Enter" dir="ltr">Enter ↵</button></div><label for="remote-text" class="text-label">اكتب من موبايلك</label><textarea id="remote-text" maxlength="500" rows="2" placeholder="اكتب رسالة أو نص هنا…" autocomplete="off" spellcheck="false"></textarea><button class="button button-secondary send-text" id="send-text" type="button">إرسال النص <span aria-hidden="true">↗</span></button></div>
+            </fieldset>
+            <p class="touch-tip" id="touch-tip">المس الشاشة لتحريك المؤشر والكليك. فعّل السحب عشان تسحب نافذة أو تحدّد نص.</p>
+            <div class="input-notice" id="input-notice" role="status" aria-live="polite"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="how-it-works" id="how-it-works" aria-label="طريقة الاتصال"><div><span class="how-number">01</span><p><strong>نفس الشبكة</strong><small>الموبايل والكمبيوتر على نفس الواي فاي</small></p></div><div><span class="how-number">02</span><p><strong>اكتب الرمز</strong><small>هتلاقيه في نافذة سهل ريموت على الكمبيوتر</small></p></div><div><span class="how-number">03</span><p><strong>وافق وابدأ</strong><small>وافق من الكمبيوتر، وبعدها فعّل التحكم</small></p></div></section>
+    </main>
+    <footer class="app-footer"><span>SAHL REMOTE</span><p>قريب من جهازك، حتى من شاشة أصغر.</p><span class="version-label">LOCAL EDITION / 01</span></footer>
+  </div>
+  <noscript><p class="noscript">فعّل JavaScript في المتصفح عشان تقدر تتصل بجهازك.</p></noscript>
+</body>
+</html>

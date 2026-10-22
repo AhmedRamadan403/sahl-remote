@@ -1,0 +1,5 @@
+aiohttp==3.14.5
+Pillow==12.3.0
+cryptography==50.0.2
+customtkinter==5.2.2
+qrcode==8.2

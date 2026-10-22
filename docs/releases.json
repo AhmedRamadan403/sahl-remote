@@ -1,0 +1,20 @@
+{
+  "site_url": "https://ahmedramadan403.github.io/sahl-remote/",
+  "release_url": "https://github.com/AhmedRamadan403/sahl-remote/releases/tag/v0.3.1",
+  "releases": {
+    "android": {
+      "version": "0.2.0",
+      "filename": "SahlRemote-Android.apk",
+      "size_bytes": 72653030,
+      "sha256": "bfd73cb1bf4249ff54d99cfdf4ba7e0edff45b2be9fd5b52165e12b9fd2f2d98",
+      "url": "https://github.com/AhmedRamadan403/sahl-remote/releases/download/v0.3.1/SahlRemote-Android.apk"
+    },
+    "windows": {
+      "version": "0.3.1",
+      "filename": "SahlRemote-Desktop.exe",
+      "size_bytes": 42266426,
+      "sha256": "15a0463e7271f9aa9f051661f52be00b5bf4762753d094514718c03217d4fd22",
+      "url": "https://github.com/AhmedRamadan403/sahl-remote/releases/download/v0.3.1/SahlRemote-Desktop.exe"
+    }
+  }
+}
